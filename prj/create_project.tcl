@@ -50,6 +50,27 @@ if {$make_assignments} {
 	set_global_assignment -name VHDL_FILE ../src/sync_beh.vhd
 	set_global_assignment -name VHDL_FILE ../src/sync_pkg.vhd
 
+	set_global_assignment -name VHDL_FILE ../src/vga/console_sm_beh.vhd
+	set_global_assignment -name VHDL_FILE ../src/vga/console_sm_sync_beh.vhd
+	set_global_assignment -name VHDL_FILE ../src/vga/console_sm_sync.vhd
+	set_global_assignment -name VHDL_FILE ../src/vga/console_sm.vhd
+	set_global_assignment -name VHDL_FILE ../src/vga/font_pkg.vhd
+	set_global_assignment -name VHDL_FILE ../src/vga/font_rom_beh.vhd
+	set_global_assignment -name VHDL_FILE ../src/vga/font_rom.vhd
+	set_global_assignment -name VHDL_FILE ../src/vga/interval_beh.vhd
+	set_global_assignment -name VHDL_FILE ../src/vga/interval.vhd
+	set_global_assignment -name VHDL_FILE ../src/vga/textmode_vga_component_pkg.vhd
+	set_global_assignment -name VHDL_FILE ../src/vga/textmode_vga_h_sm_beh.vhd
+	set_global_assignment -name VHDL_FILE ../src/vga/textmode_vga_h_sm.vhd
+	set_global_assignment -name VHDL_FILE ../src/vga/textmode_vga_pkg.vhd
+	set_global_assignment -name VHDL_FILE ../src/vga/textmode_vga_platform_dependent_pkg.vhd
+	set_global_assignment -name VHDL_FILE ../src/vga/textmode_vga_struct.vhd
+	set_global_assignment -name VHDL_FILE ../src/vga/textmode_vga.vhd
+	set_global_assignment -name VHDL_FILE ../src/vga/textmode_vga_v_sm_beh.vhd
+	set_global_assignment -name VHDL_FILE ../src/vga/textmode_vga_v_sm.vhd
+	set_global_assignment -name VHDL_FILE ../src/vga/video_memory_beh.vhd
+	set_global_assignment -name VHDL_FILE ../src/vga/video_memory.vhd
+
 	set_location_assignment PIN_T2 -to seg_b[6]
 	set_location_assignment PIN_AA11 -to seg_b[5]
 	set_location_assignment PIN_R6 -to seg_b[4]
@@ -66,7 +87,19 @@ if {$make_assignments} {
 	set_location_assignment PIN_R8 -to seg_a[0]
 	set_location_assignment PIN_N3 -to sys_clk
 	set_location_assignment PIN_AF17 -to sys_res_n
-     set_location_assignment PIN_A3 -to btn_a
+    set_location_assignment PIN_A3 -to btn_a
+    set_location_assignment PIN_A5 -to btn_b
+
+    set_location_assignment PIN_E22 -to vga_r0
+    set_location_assignment PIN_T4  -to vga_r1
+    set_location_assignment PIN_T7  -to vga_r2
+    set_location_assignment PIN_E23 -to vga_g0
+    set_location_assignment PIN_T5  -to vga_g1
+    set_location_assignment PIN_T24 -to vga_g2
+    set_location_assignment PIN_E24 -to vga_b0
+    set_location_assignment PIN_T6  -to vga_b1
+    set_location_assignment PIN_F1  -to vga_hsync_n
+    set_location_assignment PIN_F2  -to vga_vsync_n
 
 	set_global_assignment -name FMAX_REQUIREMENT "33.33 MHz" -section_id sys_clk
 	set_instance_assignment -name CLOCK_SETTINGS sys_clk -to sys_clk

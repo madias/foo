@@ -12,7 +12,8 @@ package event_counter_pkg is
     (
       sys_clk : in std_logic;
       sys_res_n : in std_logic;
-      sense : in std_logic;
+	  sense_a : in std_logic;
+      sense_b : in std_logic;
       cnt : out std_logic_vector(CNT_WIDTH - 1 downto 0)
     );
   end component event_counter;

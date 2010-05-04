@@ -3,8 +3,14 @@ use ieee.std_logic_1164.all;
 use work.debounce_pkg.all;
 use work.sync_pkg.all;
 use work.event_counter_pkg.all;
+use work.textmode_vga_component_pkg.all;
+use work.textmode_vga_pkg.all;
+use work.textmode_vga_platform_dependent_pkg.all;
+
 
 architecture struct of debounce_top is
+  constant VGA_CLK_FREQ : integer := 25175000;
+  constant BLINK_INTERVAL_MS : integer := 10;
   constant CLK_FREQ : integer := 33330000;
   constant TIMEOUT : time := 1 ms;
   constant RES_N_DEFAULT_VALUE : std_logic := '1';
@@ -12,8 +18,25 @@ architecture struct of debounce_top is
   constant BTN_A_RESET_VALUE : std_logic := '1';
   constant EVENT_CNT_WIDTH : integer := 8;
 
-  signal sys_res_n_sync, btn_a_sync : std_logic;
+  signal sys_res_n_sync, btn_a_sync, btn_b_sync : std_logic;--added by me.
   signal event_cnt : std_logic_vector(EVENT_CNT_WIDTH - 1 downto 0);
+
+  -- for the vga ip core.
+  signal command_sync : std_logic_vector(COMMAND_SIZE - 1 downto 0);
+  signal command_data_sync : std_logic_vector(3*COLOR_SIZE + CHAR_SIZE - 1 downto 0);
+  signal free_sync : std_logic;
+  signal vga_clk_sync : std_logic;
+  signal vga_res_n_sync : std_logic;
+  signal vga_vsync_n_sync : std_logic;
+  signal vga_hsync_n_sync : std_logic;
+  signal vga_r0_sync : std_logic;
+  signal vga_r1_sync : std_logic;
+  signal vga_r2_sync : std_logic;
+  signal vga_g0_sync : std_logic;
+  signal vga_g1_sync : std_logic;
+  signal vga_g2_sync : std_logic;
+  signal vga_b0_sync : std_logic;
+  signal vga_b1_sync : std_logic;
 
   function to_segs(value : in std_logic_vector(3 downto 0)) return std_logic_vector is
   begin
@@ -70,6 +93,24 @@ begin
       data_out => btn_a_sync
     );
 
+--  button b by me
+    btn_b_debounce_inst : debounce
+    generic map
+    (
+      CLK_FREQ => CLK_FREQ,
+      TIMEOUT => TIMEOUT,
+      RESET_VALUE => BTN_A_RESET_VALUE,
+      SYNC_STAGES => SYNC_STAGES
+    )
+    port map
+    (
+      sys_clk => sys_clk,
+      sys_res_n => sys_res_n_sync,
+      data_in => btn_b,
+      data_out => btn_b_sync
+    );
+--  button b by me ende.
+
   event_cnt_inst : event_counter
     generic map
     (
@@ -80,11 +121,44 @@ begin
     (
       sys_clk => sys_clk,
       sys_res_n => sys_res_n_sync,
-      sense => btn_a_sync,
+      sense_a => btn_a_sync,
+      sense_b => btn_b_sync,
       cnt => event_cnt
     );
 
   seg_a <= to_segs(event_cnt(3 downto 0));
   seg_b <= to_segs(event_cnt(7 downto 4));
+
+-- here comes the vga ip core.
+
+  vga_inst : textmode_vga
+	generic map
+	(
+	  VGA_CLK_FREQ => VGA_CLK_FREQ,
+	  BLINK_INTERVAL_MS => BLINK_INTERVAL_MS,
+	  SYNC_STAGES => SYNC_STAGES
+	)
+	port map
+	(
+	  -- internal user interface.
+      sys_clk => sys_clk,
+      sys_res_n => sys_res_n_sync,
+	  command => command_sync,
+	  command_data => command_data_sync,
+	  free => free_sync,
+	  -- external vga interface.
+	  vga_clk => vga_clk_sync,
+	  vga_res_n => vga_res_n_sync,
+	  vsync_n => vga_vsync_n_sync,
+	  hsync_n => vga_hsync_n_sync,
+	  r(0) => vga_r0_sync,
+	  r(1) => vga_r1_sync,
+	  r(2) => vga_r2_sync,
+	  g(0) => vga_g0_sync,
+	  g(1) => vga_g1_sync,
+	  g(2) => vga_g2_sync,
+	  b(0) => vga_b0_sync,
+	  b(1) => vga_b1_sync
+	);
 
 end architecture struct;
