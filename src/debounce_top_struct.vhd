@@ -60,8 +60,10 @@ architecture struct of debounce_top is
       when others => return "1111111";
     end case;
   end function;  
+
+
 begin
-  sys_res_n_debounce_inst : debounce
+    sys_res_n_debounce_inst : debounce
     generic map
     (
       CLK_FREQ => CLK_FREQ,
@@ -111,7 +113,7 @@ begin
     );
 --  button b by me ende.
 
-  event_cnt_inst : event_counter
+  	event_cnt_inst : event_counter
     generic map
     (
       CNT_WIDTH => EVENT_CNT_WIDTH,
@@ -126,12 +128,22 @@ begin
       cnt => event_cnt
     );
 
-  seg_a <= to_segs(event_cnt(3 downto 0));
-  seg_b <= to_segs(event_cnt(7 downto 4));
+    seg_a <= to_segs(event_cnt(3 downto 0));
+    seg_b <= to_segs(event_cnt(7 downto 4));
 
--- here comes the vga ip core.
+	vga_r1 <= vga_r1_sync;
+	vga_r0 <= vga_r0_sync;
+	vga_r2 <= vga_r2_sync;
+	vga_g0 <= vga_g0_sync;
+	vga_g1 <= vga_g1_sync;
+	vga_g2 <= vga_g2_sync;
+	vga_b0 <= vga_b0_sync;
+	vga_b1 <= vga_b1_sync;
+	vga_vsync_n <= vga_vsync_n_sync;
+	vga_hsync_n <= vga_hsync_n_sync;
 
-  vga_inst : textmode_vga
+--  here comes the vga ip core.
+    vga_inst : textmode_vga
 	generic map
 	(
 	  VGA_CLK_FREQ => VGA_CLK_FREQ,
@@ -160,5 +172,6 @@ begin
 	  b(0) => vga_b0_sync,
 	  b(1) => vga_b1_sync
 	);
+-- end of vga ip core.
 
 end architecture struct;
