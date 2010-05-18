@@ -6,6 +6,8 @@ use work.event_counter_pkg.all;
 use work.textmode_vga_component_pkg.all;
 use work.textmode_vga_pkg.all;
 use work.textmode_vga_platform_dependent_pkg.all;
+use work.pll_pkg.all;
+use work.cnt_to_vga_pkg.all;
 
 
 architecture struct of debounce_top is
@@ -16,6 +18,7 @@ architecture struct of debounce_top is
   constant RES_N_DEFAULT_VALUE : std_logic := '1';
   constant SYNC_STAGES : integer := 2;
   constant BTN_A_RESET_VALUE : std_logic := '1';
+  constant VGA_RESET_VALUE : std_logic := '0';
   constant EVENT_CNT_WIDTH : integer := 8;
 
   signal sys_res_n_sync, btn_a_sync, btn_b_sync : std_logic;--added by me.
@@ -26,7 +29,7 @@ architecture struct of debounce_top is
   signal command_data_sync : std_logic_vector(3*COLOR_SIZE + CHAR_SIZE - 1 downto 0);
   signal free_sync : std_logic;
   signal vga_clk_sync : std_logic;
-  signal vga_res_n_sync : std_logic;
+  signal vga_res_n_sync : std_logic;	-- see TODO ip vga core.
   signal vga_vsync_n_sync : std_logic;
   signal vga_hsync_n_sync : std_logic;
   signal vga_r0_sync : std_logic;
@@ -142,6 +145,33 @@ begin
 	vga_vsync_n <= vga_vsync_n_sync;
 	vga_hsync_n <= vga_hsync_n_sync;
 
+-- clock for vga core.
+	pll_inst : pll_vga
+	port map
+	(
+	  inclk0=>sys_clk,
+	  c0=>vga_clk_sync
+	);
+
+-- here comes my output for the vga machine.
+	screen_inst : cnt_to_vga
+	generic map
+	(
+    	RESET_VALUE		=> VGA_RESET_VALUE,
+		COMMAND_SIZE	=> COMMAND_SIZE,
+		COLOR_SIZE		=> COLOR_SIZE,
+		CHAR_SIZE		=> CHAR_SIZE
+	)
+	port map
+	(
+		sys_clk			=> sys_clk,
+		sys_res_n		=> sys_res_n_sync,
+		next_cmd_flag	=> free_sync,
+    	cmd				=> command_sync,
+		cmd_data		=> command_data_sync,
+	  	vga_res_n 		=> vga_res_n_sync
+	);
+
 --  here comes the vga ip core.
     vga_inst : textmode_vga
 	generic map
@@ -160,7 +190,14 @@ begin
 	  free => free_sync,
 	  -- external vga interface.
 	  vga_clk => vga_clk_sync,
-	  vga_res_n => vga_res_n_sync,
+
+-- TODO.
+	  vga_res_n => vga_res_n_sync, -- many warnings with this.
+-- see cnt_to_vga.
+
+--	  vga_res_n => sys_res_n_sync, -- not as many warnings with this.
+--  but i'm	not sure if this is the right reset for the vga module.???
+
 	  vsync_n => vga_vsync_n_sync,
 	  hsync_n => vga_hsync_n_sync,
 	  r(0) => vga_r0_sync,
