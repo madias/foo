@@ -23,4 +23,5 @@ simulation/
 # => excludes *.sof from ignoring.
 #!*.sof
 !*.qpf
+!*.qsf
 #!*.tcl
