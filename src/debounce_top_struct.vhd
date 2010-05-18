@@ -157,10 +157,10 @@ begin
 	screen_inst : cnt_to_vga
 	generic map
 	(
-    	RESET_VALUE		=> VGA_RESET_VALUE,
-		COMMAND_SIZE	=> COMMAND_SIZE,
-		COLOR_SIZE		=> COLOR_SIZE,
-		CHAR_SIZE		=> CHAR_SIZE
+    	RESET_VALUE		=> VGA_RESET_VALUE
+--		COMMAND_SIZE	=> COMMAND_SIZE,
+--		COLOR_SIZE		=> COLOR_SIZE,
+--		CHAR_SIZE		=> CHAR_SIZE
 	)
 	port map
 	(

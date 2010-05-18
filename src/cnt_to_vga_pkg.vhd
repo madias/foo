@@ -1,14 +1,15 @@
 library ieee;
 use ieee.std_logic_1164.all;
+use work.textmode_vga_pkg.all; 	-- weiss nicht ob das good is either.
 
 package cnt_to_vga_pkg is
 	component cnt_to_vga is
 		generic
   		(
-    		RESET_VALUE		: std_logic;
-			COMMAND_SIZE	: integer;
-			COLOR_SIZE		: integer;
-			CHAR_SIZE		: integer
+    		RESET_VALUE		: std_logic
+--			COMMAND_SIZE	: integer;
+--			COLOR_SIZE		: integer;
+--			CHAR_SIZE		: integer
   		);
   		port
   		(
