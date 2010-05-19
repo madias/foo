@@ -12,7 +12,7 @@ use work.cnt_to_vga_pkg.all;
 
 architecture struct of debounce_top is
   constant VGA_CLK_FREQ : integer := 25175000;
-  constant BLINK_INTERVAL_MS : integer := 10;
+  constant BLINK_INTERVAL_MS : integer := 500;
   constant CLK_FREQ : integer := 33330000;
   constant TIMEOUT : time := 1 ms;
   constant RES_N_DEFAULT_VALUE : std_logic := '1';
@@ -158,9 +158,6 @@ begin
 	generic map
 	(
     	RESET_VALUE		=> VGA_RESET_VALUE
---		COMMAND_SIZE	=> COMMAND_SIZE,
---		COLOR_SIZE		=> COLOR_SIZE,
---		CHAR_SIZE		=> CHAR_SIZE
 	)
 	port map
 	(
@@ -192,11 +189,9 @@ begin
 	  vga_clk => vga_clk_sync,
 
 -- TODO.
-	  vga_res_n => vga_res_n_sync, -- many warnings with this.
--- see cnt_to_vga.
-
---	  vga_res_n => sys_res_n_sync, -- not as many warnings with this.
---  but i'm	not sure if this is the right reset for the vga module.???
+	  vga_res_n => vga_res_n_sync, -- see cnt_to_vga. 
+--	  (schleift sys_res_n durch)
+--    i'm not sure if this is the right reset for the vga module.???
 
 	  vsync_n => vga_vsync_n_sync,
 	  hsync_n => vga_hsync_n_sync,

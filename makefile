@@ -31,8 +31,8 @@ warn: $(QUARTUS)
 error: $(QUARTUS)
 	@clear
 	@echo " ERRORs: "
-	@grep -ih "warning: " ${QUARTUS}*rpt
-	@grep -ih "warning (" ${QUARTUS}*rpt
+	@grep -ih "error: " ${QUARTUS}*rpt
+	@grep -ih "error (" ${QUARTUS}*rpt
 
 prj: $(QUARTUS)
 	@clear
