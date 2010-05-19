@@ -49,6 +49,11 @@ if {$make_assignments} {
 	set_global_assignment -name VHDL_FILE ../src/sync.vhd
 	set_global_assignment -name VHDL_FILE ../src/sync_beh.vhd
 	set_global_assignment -name VHDL_FILE ../src/sync_pkg.vhd
+#by me.
+	set_global_assignment -name VHDL_FILE ../src/cnt_to_vga.vhd
+	set_global_assignment -name VHDL_FILE ../src/cnt_to_vga_4_cmds.vhd
+	set_global_assignment -name VHDL_FILE ../src/cnt_to_vga_first_light.vhd
+	set_global_assignment -name VHDL_FILE ../src/cnt_to_vga_pkg.vhd
 
 	set_global_assignment -name VHDL_FILE ../src/vga/console_sm_beh.vhd
 	set_global_assignment -name VHDL_FILE ../src/vga/console_sm_sync_beh.vhd

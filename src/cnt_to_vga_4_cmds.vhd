@@ -2,7 +2,7 @@ library ieee;
 use ieee.std_logic_1164.all;
 use work.textmode_vga_pkg.all;
 
-architecture beh of cnt_to_vga is
+architecture four_commands of cnt_to_vga is
 
 constant VGA_READY : std_logic := '1';
 constant NO_DATA   : std_logic_vector(3*COLOR_SIZE + CHAR_SIZE - 1 downto 0) := (others => '0');
@@ -62,4 +62,4 @@ begin
 
 	vga_res_n <= sys_res_n;
 
-end architecture beh;
+end architecture four_commands;

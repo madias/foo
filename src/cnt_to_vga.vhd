@@ -1,14 +1,11 @@
 library ieee;
 use ieee.std_logic_1164.all;
-use work.textmode_vga_pkg.all; 	-- weiss nicht ob das good is either.
+use work.textmode_vga_pkg.all;
 
 entity cnt_to_vga is
   generic
   (
     RESET_VALUE		: std_logic
---	COMMAND_SIZE	: integer;
---	COLOR_SIZE		: integer;
---	CHAR_SIZE		: integer
   );
   port
   (
@@ -20,3 +17,9 @@ entity cnt_to_vga is
     vga_res_n		: out std_logic
   );
 end entity cnt_to_vga;
+
+configuration counter_value_to_vga_display of cnt_to_vga is
+	for four_commands
+	--for first_light
+	end for;
+end counter_value_to_vga_display;

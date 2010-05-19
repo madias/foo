@@ -134,6 +134,7 @@ begin
     seg_a <= to_segs(event_cnt(3 downto 0));
     seg_b <= to_segs(event_cnt(7 downto 4));
 
+--  wires from the vga plug to the vga core.
 	vga_r1 <= vga_r1_sync;
 	vga_r0 <= vga_r0_sync;
 	vga_r2 <= vga_r2_sync;

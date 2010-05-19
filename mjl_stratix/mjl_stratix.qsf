@@ -84,8 +84,10 @@ set_global_assignment -name LL_MEMBER_STATE LOCKED -section_id "Root Region"
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
 set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
 set_global_assignment -name VHDL_FILE ../src/cnt_to_vga.vhd
-set_global_assignment -name VHDL_FILE ../src/cnt_to_vga_beh.vhd
+set_global_assignment -name VHDL_FILE ../src/cnt_to_vga_first_light.vhd
+set_global_assignment -name VHDL_FILE ../src/cnt_to_vga_4_cmds.vhd
 set_global_assignment -name VHDL_FILE ../src/cnt_to_vga_pkg.vhd
+set_global_assignment -name VHDL_FILE ../src/math_pkg.vhd
 set_global_assignment -name VHDL_FILE ../src/counter.vhd
 set_global_assignment -name VHDL_FILE ../src/counter_beh.vhd
 set_global_assignment -name VHDL_FILE ../src/debounce.vhd
@@ -99,20 +101,19 @@ set_global_assignment -name VHDL_FILE ../src/debounce_top_struct.vhd
 set_global_assignment -name VHDL_FILE ../src/event_counter.vhd
 set_global_assignment -name VHDL_FILE ../src/event_counter_beh.vhd
 set_global_assignment -name VHDL_FILE ../src/event_counter_pkg.vhd
-set_global_assignment -name VHDL_FILE ../src/math_pkg.vhd
 set_global_assignment -name VHDL_FILE ../src/sync.vhd
 set_global_assignment -name VHDL_FILE ../src/sync_beh.vhd
 set_global_assignment -name VHDL_FILE ../src/sync_pkg.vhd
+set_global_assignment -name VHDL_FILE ../src/vga/textmode_vga_component_pkg.vhd
 set_global_assignment -name VHDL_FILE ../src/vga/console_sm_beh.vhd
-set_global_assignment -name VHDL_FILE ../src/vga/console_sm_sync_beh.vhd
 set_global_assignment -name VHDL_FILE ../src/vga/console_sm_sync.vhd
 set_global_assignment -name VHDL_FILE ../src/vga/console_sm.vhd
 set_global_assignment -name VHDL_FILE ../src/vga/font_pkg.vhd
 set_global_assignment -name VHDL_FILE ../src/vga/font_rom_beh.vhd
-set_global_assignment -name VHDL_FILE ../src/vga/font_rom.vhd
 set_global_assignment -name VHDL_FILE ../src/vga/interval_beh.vhd
 set_global_assignment -name VHDL_FILE ../src/vga/interval.vhd
-set_global_assignment -name VHDL_FILE ../src/vga/textmode_vga_component_pkg.vhd
+set_global_assignment -name VHDL_FILE ../src/vga/font_rom.vhd
+set_global_assignment -name VHDL_FILE ../src/vga/console_sm_sync_beh.vhd
 set_global_assignment -name VHDL_FILE ../src/vga/textmode_vga_h_sm_beh.vhd
 set_global_assignment -name VHDL_FILE ../src/vga/textmode_vga_h_sm.vhd
 set_global_assignment -name VHDL_FILE ../src/vga/textmode_vga_pkg.vhd
