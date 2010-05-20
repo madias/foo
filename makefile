@@ -12,16 +12,6 @@ all: $(QUARTUS)
 	@echo "	Quartus start Compilation"
 	@$(QUMACRO) quartus_sh --flow compile mjl_stratix
 
-#olderror: $(QUARTUS)
-#	@clear
-#	@echo " MAP ERRORS: "
-#	@grep -i 'error:' 'error (' $(QUARTUS)*map*.rpt
-	
-#oldwarn: $(QUARTUS)
-#	@clear
-#	@echo " MAP WARNINGS: "
-#	@grep -i "warning:' 'warning(" ${QUARTUS}*rpt
-
 warn: $(QUARTUS)
 	@clear
 	@echo " WARNINGs: "

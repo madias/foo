@@ -8,6 +8,10 @@ constant VGA_READY : std_logic := '1';
 constant NO_DATA   : std_logic_vector(3*COLOR_SIZE + CHAR_SIZE - 1 downto 0) := (others => '0');
 constant INIT_CMDs : integer := 3;
 
+
+constant REDLLOW : std_logic_vector := "00000000111111110000000000000000";
+--									   "xxxxxxxxrrrrrrrrggggggggbbbbbbbb";
+
 signal cmd_next 	 : std_logic_vector(COMMAND_SIZE - 1 downto 0);
 signal cmd_data_next : std_logic_vector(3*COLOR_SIZE + CHAR_SIZE - 1 downto 0);
 
@@ -26,8 +30,10 @@ begin
 	begin
 
 		if next_cmd_flag = VGA_READY then
-	  		cmd_sync <= cmd_next;
-	 		cmd_data_sync <= cmd_data_next;
+	  		--cmd_sync <= cmd_next;
+	 		--cmd_data_sync <= cmd_data_next;
+	  		cmd_sync <= COMMAND_SET_BACKGROUND;
+	 		cmd_data_sync <= REDLLOW;
 		end if;
 
 		if cmd_cnt < INIT_CMDs then
@@ -42,8 +48,8 @@ begin
 	begin
 		if cmd_cnt < INIT_CMDs then
 			if cmd_cnt = 0 then
-				cmd_next <= COMMAND_NOP;
-				cmd_data_next <= NO_DATA;
+				cmd_next <= COMMAND_SET_BACKGROUND;
+				cmd_data_next <= REDLLOW;
 			elsif cmd_cnt = 1 then
 				cmd_next <= COMMAND_NOP;
 				cmd_data_next <= NO_DATA;

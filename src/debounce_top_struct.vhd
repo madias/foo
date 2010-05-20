@@ -156,6 +156,7 @@ begin
 
 -- here comes my output for the vga machine.
 	screen_inst : cnt_to_vga
+--	screen_inst : counter_value_to_vga_display
 	generic map
 	(
     	RESET_VALUE		=> VGA_RESET_VALUE

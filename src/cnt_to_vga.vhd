@@ -20,6 +20,6 @@ end entity cnt_to_vga;
 
 configuration counter_value_to_vga_display of cnt_to_vga is
 	for four_commands
-	--for first_light
+--	for first_light
 	end for;
 end counter_value_to_vga_display;
